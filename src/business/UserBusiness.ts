@@ -3,6 +3,8 @@ import { Authenticator } from "../services/Authenticator";
 import { HashManager } from "../services/HashManager";
 import { IdGenerator } from "../services/IdGenerator";
 import {USER_ROLES} from "../services/Authenticator";
+import { FriendDatabase } from "../data/FriendDatabase";
+import { User } from "../model/User";
 
 export class UserBusiness {
 
@@ -64,4 +66,46 @@ export class UserBusiness {
 
         return token;
     }
+
+    public async addFriend(token: string, user_friend_id: string): Promise<User> {
+        try {
+
+            const authenticator = new Authenticator()
+            const tokenInfo = authenticator.getData(token)
+            if (!tokenInfo.id || !user_friend_id){
+                throw new Error("Informe todas as informações.")
+            }
+
+            const userDatabase = new UserDatabase()
+            const user = userDatabase.getUserById(user_friend_id)
+
+            const friendDatabase = new FriendDatabase()
+            await friendDatabase.addFriend(tokenInfo.id, user_friend_id)
+
+            return user
+        } catch (error) {
+            throw new Error(error.message)
+        }
+    }
+
+    public async deleteFriend(token: string, user_friend_id: string): Promise<User> {
+        try {
+            const authenticator = new Authenticator()
+            const tokenInfo = authenticator.getData(token)
+            if (!tokenInfo.id || !user_friend_id){
+                throw new Error("Informe todas as informações.")
+            }
+
+            const userDatabase = new UserDatabase()
+            const user = userDatabase.getUserById(user_friend_id)
+
+            const friendDatabase = new FriendDatabase()
+            await friendDatabase.deleteFriend(tokenInfo.id, user_friend_id)
+
+            return user
+        } catch (error) {
+            throw new Error(error.message)
+        }
+    }
+
 }
