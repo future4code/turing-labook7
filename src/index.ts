@@ -1,13 +1,14 @@
 import express from "express";
 import { AddressInfo } from "net";
 import dotenv from 'dotenv';
-import { login } from "./controller/login";
-import { signUp } from "./controller/signUp";
+import { userRouter } from "./routes/userRouter";
 
 dotenv.config();
 
 const app = express();
 app.use(express.json());
+
+app.use('/user', userRouter)
 
 const server = app.listen(process.env.PORT || 3000, () => {
     if (server) {
@@ -17,6 +18,3 @@ const server = app.listen(process.env.PORT || 3000, () => {
     console.error(`Failure upon starting server.`);
     }
     });
-
-    app.post('/signup', signUp);
-    app.post('/login', login);

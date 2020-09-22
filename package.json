@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
-    "moment": "^2.28.0"
+    "moment": "^2.28.0",
+    "ts-node-dev": "^1.0.0-pre.63"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",
@@ -25,7 +26,8 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "clear && tsc && node ./build/index.js"
+    "start": "clear && tsc && node ./build/index.js",
+    "start:dev": "ts-node-dev ./src/index.ts"
   },
   "repository": {
     "type": "git",

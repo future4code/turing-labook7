@@ -15,6 +15,9 @@ export class UserDatabase extends BaseDatabase {
                     role
                 }).into(UserDatabase.TABLE_USERS);
             } catch(err) {
+                if(err.message.includes("Data truncated for column 'role' at row 1")){
+                    throw new Error("Roles precisam ser necessariamente NORMAL ou ADMIN")
+                }
                 throw new Error (err.sqlMessage || err.message)
             }
     };
