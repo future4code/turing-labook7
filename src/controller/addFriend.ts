@@ -19,6 +19,6 @@ export const addFriend = async (req: Request, res: Response): Promise<void> => {
         })
     } finally {
         BaseDatabase.destroyConnection()
-    }
+    } 
 }
 
