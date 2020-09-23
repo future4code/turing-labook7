@@ -1,6 +1,6 @@
 import dayjs from "dayjs";
 import { PostDatabase } from "../data/PostDatabase";
-import { POST_TYPE } from "../model/Post";
+import { PostDTO, POST_TYPE } from "../model/Post";
 import { Authenticator } from "../services/Authenticator";
 import { IdGenerator } from "../services/IdGenerator";
 
@@ -20,5 +20,19 @@ export class PostBusiness {
 
         const postDatabase = new PostDatabase()
         await postDatabase.createPost(postId, photoUrl, description, createdAt, type, user.id)
+    }
+
+    public async getFeed(token: string): Promise<PostDTO[]> {
+        const authenticator = new Authenticator
+        const user = authenticator.getData(token)
+
+        // if(!type) {
+        //     type = "NORMAL"
+        // }
+
+        const postDatabase = new PostDatabase()
+        const feed = await postDatabase.getFeed(user.id)
+
+        return feed
     }
 }

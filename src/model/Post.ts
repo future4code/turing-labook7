@@ -3,7 +3,7 @@ export enum POST_TYPE {
     EVENTO = "EVENTO"
 }
 
-export interface FeedDTO {
+export interface PostDTO {
     photoUrl: string,
     description: string,
     createdAt: string,
