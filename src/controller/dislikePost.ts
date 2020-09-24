@@ -6,7 +6,7 @@ export const dislikePost = async(req: Request, res: Response): Promise<void> => 
     try {
         const token = req.headers.authorization as string;
         const postId = req.body.postId as string;
-        
+
         const postBusiness = new PostBusiness();
         await postBusiness.dislikePost(token, postId)
 

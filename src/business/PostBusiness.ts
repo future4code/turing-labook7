@@ -39,6 +39,14 @@ export class PostBusiness {
 
         return postDatabase.likePost(user.id, postId)
     }
+    
+    public async dislikePost(token: string, postId: string): Promise<any> {
+        const user = new Authenticator().getData(token)
+
+        const postDatabase = new PostDatabase()
+
+        return postDatabase.dislikePost(user.id, postId)
+    }
 
     public async commentPost(token: string, postId: string, comment: string): Promise<void> {
         const user = new Authenticator().getData(token)
