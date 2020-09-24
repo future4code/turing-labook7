@@ -54,4 +54,11 @@ export class PostDatabase extends BaseDatabase {
             userId
         }).into(PostDatabase.TABLE_LIKE)
     }
+
+    public async dislikePost (userId: string, postId: string): Promise<void> {
+        await this.getConnection()
+        .delete("*")
+        .from(PostDatabase.TABLE_LIKE)
+        .where({postId, userId})
+    }
 }
