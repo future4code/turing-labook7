@@ -27,7 +27,7 @@ export class PostBusiness {
         const user = authenticator.getData(token)
 
         const postDatabase = new PostDatabase()
-        const feed = await postDatabase.getFeed(user.id, type.toUpperCase())
+        const feed = await postDatabase.getFeed(user.id, type && type.toUpperCase())
 
         return feed
     }
