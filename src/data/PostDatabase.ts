@@ -3,6 +3,7 @@ import { BaseDatabase } from "./BaseDatabase";
 
 export class PostDatabase extends BaseDatabase {
     private static TABLE_NAME: string = 'LabookPosts';
+    private static TABLE_LIKE: string = 'likeDeslikePost';
 
     public async createPost(postId: string, photoUrl: string, description: string, createdAt: string, type: POST_TYPE, userId: string) {
         await this.getConnection()
@@ -44,5 +45,13 @@ export class PostDatabase extends BaseDatabase {
         }
 
         return response[0]
+    }
+
+    public async likePost (userId: string, postId: string): Promise<void> {
+        await this.getConnection()
+        .insert({
+            postId,
+            userId
+        }).into(PostDatabase.TABLE_LIKE)
     }
 }
