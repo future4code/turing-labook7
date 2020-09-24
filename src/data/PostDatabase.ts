@@ -55,7 +55,6 @@ export class PostDatabase extends BaseDatabase {
             userId
         }).into(PostDatabase.TABLE_LIKE)
     }
-
     public async commentPost (commentId: string, postId: string, userId: string, comment: string): Promise<void> {
         await this.getConnection()
         .insert({
