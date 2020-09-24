@@ -23,12 +23,20 @@ export class PostBusiness {
     }
 
     public async getFeed(token: string, type: string, pageNumber: number): Promise<PostDTO[]> {
-        const authenticator = new Authenticator
+        const authenticator = new Authenticator()
         const user = authenticator.getData(token)
 
         const postDatabase = new PostDatabase()
         const feed = await postDatabase.getFeed(user.id, type && type.toUpperCase(), pageNumber)
 
         return feed
+    }
+
+    public async likePost(token: string, postId: string): Promise<any> {
+        const user = new Authenticator().getData(token)
+
+        const postDatabase = new PostDatabase()
+
+        return postDatabase.likePost(user.id, postId)
     }
 }
