@@ -7,9 +7,10 @@ import { PostDTO } from '../model/Post'
 export const getFeed = async (req: Request, res: Response) : Promise<void> => {
     try {
         const token = req.headers.authorization as string
+        const type = req.query.type as string
 
         const postBusiness = new PostBusiness()
-        const feed = await postBusiness.getFeed(token)
+        const feed = await postBusiness.getFeed(token, type)
 
         res.status(200).send({
             posts: feed.map((post: PostDTO) => {
