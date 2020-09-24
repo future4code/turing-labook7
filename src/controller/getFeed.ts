@@ -8,9 +8,10 @@ export const getFeed = async (req: Request, res: Response) : Promise<void> => {
     try {
         const token = req.headers.authorization as string
         const type = req.query.type as string
+        const pageNumber = Number(req.query.page) || 1
 
         const postBusiness = new PostBusiness()
-        const feed = await postBusiness.getFeed(token, type)
+        const feed = await postBusiness.getFeed(token, type, pageNumber)
 
         res.status(200).send({
             posts: feed.map((post: PostDTO) => {

@@ -17,13 +17,15 @@ export class PostDatabase extends BaseDatabase {
         .into(PostDatabase.TABLE_NAME)
     }
 
-    public async getFeed(userId: string, type: string): Promise<PostDTO[]> {
+    public async getFeed(userId: string, type: string, pageNumber: number): Promise<PostDTO[]> {
         let filteredType = ""
         if(type === "NORMAL" || type === "EVENTO") {
             filteredType =  `AND LabookPosts.type = "${type}"`
         } else {
             filteredType = ""
         }
+
+        const offset: number = 5 * (pageNumber - 1)
 
         const response = await this.getConnection()
         .raw(`
@@ -32,8 +34,14 @@ export class PostDatabase extends BaseDatabase {
             JOIN LabookPosts on LabookUsers.id = LabookPosts.userId
             JOIN LabookFriends on LabookPosts.userId = LabookFriends.user_friend_id
             WHERE LabookFriends.user_id = "${userId}" ${filteredType}
-            ORDER BY LabookPosts.createdAt DESC;
+            ORDER BY LabookPosts.createdAt DESC
+            LIMIT 5
+            OFFSET ${offset};
         `)
+
+        if(!response[0].length) {
+            throw new Error("Página não encontrada!")
+        }
 
         return response[0]
     }
