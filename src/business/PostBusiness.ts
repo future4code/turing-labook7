@@ -39,4 +39,15 @@ export class PostBusiness {
 
         return postDatabase.likePost(user.id, postId)
     }
+
+    public async commentPost(token: string, postId: string, comment: string): Promise<void> {
+        const user = new Authenticator().getData(token)
+
+        const idGenerator = new IdGenerator();
+        const commentId = idGenerator.generate();
+
+        const postDatabase = new PostDatabase()
+        
+        await postDatabase.commentPost(commentId, postId, user.id, comment)
+    }
 }
